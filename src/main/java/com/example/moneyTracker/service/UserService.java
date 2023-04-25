@@ -2,6 +2,8 @@ package com.example.moneyTracker.service;
 
 import com.example.moneyTracker.model.User;
 import com.example.moneyTracker.repository.UserRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private static final Logger logger = LogManager.getLogger(AccountService.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -23,10 +26,13 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        logger.debug("Creating new user with ID: {}", user.getId());
+        return user;
     }
 
     public void deleteUser(Long id) {
+        logger.debug("User with ID: {} deleted", id);
         userRepository.deleteById(id);
     }
 }

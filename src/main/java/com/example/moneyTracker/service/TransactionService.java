@@ -3,6 +3,8 @@ package com.example.moneyTracker.service;
 import com.example.moneyTracker.model.Account;
 import com.example.moneyTracker.model.Transaction;
 import com.example.moneyTracker.repository.TransactionRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

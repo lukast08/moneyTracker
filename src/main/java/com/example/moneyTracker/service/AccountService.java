@@ -3,6 +3,8 @@ package com.example.moneyTracker.service;
 import com.example.moneyTracker.model.Account;
 import com.example.moneyTracker.model.Transaction;
 import com.example.moneyTracker.repository.AccountRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AccountService {
-
+    private static final Logger logger = LogManager.getLogger(AccountService.class);
     @Autowired
     private AccountRepository accountRepository;
 
@@ -25,6 +27,7 @@ public class AccountService {
     }
 
     public Account saveAccount(Account account) {
+        logger.debug("Creating new account for user with ID: {}", account.getUser().getId());
         return accountRepository.save(account);
     }
 
@@ -33,6 +36,7 @@ public class AccountService {
     }
 
     public Account updateBalance(Long accountId, Transaction newTransaction) {
+        logger.debug("Updating balance for account with ID: {}", accountId);
         Optional<Account> optionalAccount = accountRepository.findById(accountId);
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
