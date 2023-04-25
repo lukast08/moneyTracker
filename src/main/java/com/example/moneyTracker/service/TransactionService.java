@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -23,6 +24,13 @@ public class TransactionService {
 
     public List<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
+    }
+
+    public List<Transaction> findTransactionsByAccountId(Long accountId) {
+        return transactionRepository.findAll()
+                .stream()
+                .filter(transaction -> transaction.getAccount().getId().equals(accountId))
+                .collect(Collectors.toList());
     }
 
     public Optional<Transaction> findTransactionById(Long id) {

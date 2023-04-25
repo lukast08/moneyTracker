@@ -29,22 +29,17 @@ public class AccountController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/forUser/{userID}")
+    public ResponseEntity<List<Account>> getAccountsByUserId(@PathVariable Long userID) {
+        List<Account> accounts = accountService.findAccountsByUserID(userID);
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         System.out.println(account);
         Account newAccount = accountService.saveAccount(account);
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
-        return accountService.findAccountById(id)
-                .map(existingAccount -> {
-                    account.setId(id);
-                    Account updatedAccount = accountService.saveAccount(account);
-                    return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")

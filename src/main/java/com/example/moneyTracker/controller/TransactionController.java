@@ -34,6 +34,12 @@ public class TransactionController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/forAccount/{accountID}")
+    public ResponseEntity<List<Transaction>> getAccountsByUserId(@PathVariable Long accountID) {
+        List<Transaction> transactions = transactionService.findTransactionsByAccountId(accountID);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
 //        CompletableFuture<Account> updatedAccountFuture = accountService.updateBalanceAsync(transaction.getAccount().getId(), transaction);

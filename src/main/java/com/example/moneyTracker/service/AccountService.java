@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -24,6 +25,13 @@ public class AccountService {
 
     public Optional<Account> findAccountById(Long id) {
         return accountRepository.findById(id);
+    }
+
+    public List<Account> findAccountsByUserID(Long userID) {
+        return accountRepository.findAll()
+                .stream()
+                .filter(account -> account.getUser().getId().equals(userID))
+                .collect(Collectors.toList());
     }
 
     public Account saveAccount(Account account) {

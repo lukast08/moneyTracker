@@ -37,7 +37,7 @@ public class Transaction {
     @Column(nullable = false)
     private String type; // "INCOME" or "EXPENSE"
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 }
